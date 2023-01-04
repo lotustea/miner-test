@@ -1,0 +1,50 @@
+version: "3.7"
+services:
+    app:
+        build:
+            context: ../miner-test
+            dockerfile: docker-compose/php/Dockerfile
+        image: miner-test
+        container_name: miner-test
+        restart: unless-stopped
+        working_dir: /var/www/
+        volumes:
+            - ./:/var/www
+            - ./docker-compose/php/config/php.ini-production:/usr/local/etc/php/php.ini-production
+            - ./docker-compose/php/config/php.ini-development:/usr/local/etc/php/php.ini-development
+        networks:
+            - miner-test
+
+    webserver:
+        image: nginx:1.17-alpine
+        container_name: miner-test-nginx
+        restart: unless-stopped
+        ports:
+            - 8001:80
+        volumes:
+            - ./:/var/www
+            - ./docker-compose/nginx:/etc/nginx/conf.d
+        networks:
+            - miner-test
+
+    db:
+        image: mysql:5.7
+        restart: always
+        container_name: miner-test-db
+        environment:
+            MYSQL_DATABASE: ${DB_DATABASE}
+            MYSQL_USER: ${DB_USERNAME}
+            MYSQL_PASSWORD: ${DB_PASSWORD}
+            MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+        ports:
+            - '3306:3306'
+        expose:
+            - '3306'
+        volumes:
+            - ./docker-compose/mysql/data:/var/lib/mysql/
+        networks:
+            - miner-test
+
+networks:
+    miner-test:
+        driver: bridge
