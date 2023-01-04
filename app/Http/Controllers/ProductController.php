@@ -2,19 +2,22 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Product;
-use Illuminate\Http\Request;
+use App\DataTables\BrandsDataTable;
+use App\DataTables\ProductsDataTable;
+
+use Illuminate\Http\Response;
 
 class ProductController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @param ProductsDataTable $dataTable
+     * @return Response
      */
-    public function index()
+    public function index(ProductsDataTable $dataTable)
     {
-        return view('products.index');
+        return $dataTable->render('products.index');
     }
 
 }

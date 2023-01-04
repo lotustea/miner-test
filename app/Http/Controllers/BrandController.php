@@ -2,18 +2,20 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Brand;
-use Illuminate\Http\Request;
+use App\DataTables\BrandsDataTable;
+use App\DataTables\UsersDataTable;
+use Illuminate\Http\Response;
 
 class BrandController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @param BrandsDataTable $dataTable
+     * @return Response
      */
-    public function index()
+    public function index(BrandsDataTable $dataTable)
     {
-        return view('brands.index');
+        return $dataTable->render('brands.index');
     }
 }
