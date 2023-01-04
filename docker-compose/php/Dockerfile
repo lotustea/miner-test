@@ -1,42 +1,21 @@
 FROM php:8-fpm
 
 RUN apt-get update && apt-get install -y \
-    build-essential \
-    libicu-dev \
-    libzip-dev \
-    libpng-dev \
-    libxml2-dev \
-    libjpeg62-turbo-dev \
-    libfreetype6-dev \
-    libonig-dev \
-    locales \
-    zip \
-    unzip \
-    vim \
-    nano \
     git \
     curl \
-    wget \
-    zsh
-
-RUN apt-get update -y
-RUN apt-get install -y python3
-RUN apt-get install -y python3-pip
-
-RUN docker-php-ext-configure zip
-
-RUN docker-php-ext-install \
-    bcmath \
-    mbstring \
-    pcntl \
-    intl \
+    libpng-dev \
+    libonig-dev \
+    libxml2-dev \
     zip \
-    gd \
-    pdo_mysql \
-    opcache \
-    dom
+    unzip
 
-RUN apt-get update
+RUN apt-get clean && rm -rf /var/lib/apt/lists/*
+
+RUN docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd
+
+RUN curl -sL https://deb.nodesource.com/setup_14.x | bash -
+
+RUN apt-get update && apt-get install -y nodejs
 
 RUN apt-get clean && rm -rf /var/lib/apt/lists/*
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
