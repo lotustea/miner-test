@@ -2,16 +2,17 @@
 # Instalação
 ## Requisitos:
  - Docker: https://www.docker.com/
- 
-## Comandos
-- renomear arquivo .env-example para .env
-- no terminal: 
--- docker compose up -d --build
--- docker exec -it miner-test /bin/bash 
--- composer install
--- npm install
--- npm run build
--- php artisan migrate
+ - 
+## .env
+ - renomear arquivo .env-example para .env
+
+## Comandos no terminal
+- docker compose up -d --build
+- docker exec -it miner-test /bin/bash 
+- composer install
+- npm install
+- npm run build
+- php artisan migrate
 
 - Rodando em http://localhost:8001/
 
