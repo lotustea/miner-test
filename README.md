@@ -2,10 +2,8 @@
 # Instalação
 ## Requisitos:
  - Docker: https://www.docker.com/
- - 
 ## .env
  - renomear arquivo .env-example para .env
-
 ## Comandos no terminal
 - docker compose up -d --build
 - docker exec -it miner-test /bin/bash 
